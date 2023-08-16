@@ -49,7 +49,7 @@ public class Simulation {
         maps.entities.put(tree1.getCoordinates(), tree1);
         maps.entities.put(tree2.getCoordinates(), tree2);
 
-        System.out.println(SearchForGrass.BFS(maps,herbivore));
+        
         herbivore.setQueueGrass(maps, herbivore); //заполнить очередь сыром для мышей
 
 
