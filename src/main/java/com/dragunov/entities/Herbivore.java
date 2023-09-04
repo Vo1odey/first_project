@@ -11,8 +11,6 @@ import java.util.*;
 //травы, либо на её поглощение.
 public class Herbivore extends Creature {
 
-static Queue <Coordinates> qGrass = new LinkedList<>();
-static List <Coordinates> visited = new ArrayList<>();
     public Herbivore (Coordinates coordinates, int speed, int hp) {
         super(coordinates, speed, hp, "🐭");
     }
@@ -24,6 +22,17 @@ static List <Coordinates> visited = new ArrayList<>();
     }
 
     public void makeMove(Maps maps, Herbivore herbivore) {
+        List <Coordinates> fromCrd = new ArrayList<>();      //координаты ОТКУДА мы пришли
+        List <Coordinates> visited = new ArrayList<>();    //посещенные координаты
+        Queue <Coordinates> qCrd = new LinkedList<>();     //очередь следующих к посещению координат
 
+        visited.add(herbivore.getCoordinates());         //стартовые координаты = посещенные
+
+
+        // Пометить посещенными текущие координаты
+        // Добавить в очередь соседние координаты
+        // Посмотреть не являются ли они сыром или препятствием
+        // Если координата = сыр -> восстановить от сыра путь к мышке
+        // Для этого нужно знать из какой координаты мы пришли
     }
 }

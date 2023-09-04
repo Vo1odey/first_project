@@ -4,7 +4,6 @@ import com.dragunov.*;
 //Корневой абстрактный класс для всех существ и объектов
 //существующих в симуляции. Entities.Entity - сущность.
 abstract public class Entity {
-
     String picture;
     Coordinates coordinates;
 
