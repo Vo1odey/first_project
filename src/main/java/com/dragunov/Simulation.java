@@ -50,23 +50,11 @@ public class Simulation {
         maps.entities.put(tree2.getCoordinates(), tree2);
 
         
-        herbivore.setQueueGrass(maps, herbivore); //заполнить очередь сыром для мышей
+
 
 
 
         Simulation.startSimulation(maps, herbivore);
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     }

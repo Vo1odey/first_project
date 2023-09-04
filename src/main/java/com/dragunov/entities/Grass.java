@@ -14,15 +14,6 @@ public class Grass extends Entity {
 
     }
 
-    public static List <Grass> getAllGrass (Maps maps) {
-        List <Grass> grasses = new ArrayList<>();
-        for (Map.Entry<Coordinates, Entity> entry: maps.entities.entrySet()) {
-            Entity entity = entry.getValue();
-            if (entity instanceof Grass) grasses.add((Grass) entity);
-        }
-        return grasses;
-    }
-
     @Override
     public Coordinates getCoordinates() {
         return super.getCoordinates();

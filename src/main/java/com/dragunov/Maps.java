@@ -9,7 +9,7 @@ import java.util.Set;
 //Карта, содержит в себе коллекцию для хранения существ
 //и их расположения.
 public class Maps {
-    public Map <Coordinates, Entity> entities = new HashMap<>();
+    Map <Coordinates, Entity> entities = new HashMap<>();
 
 
     public Entity getValue (Coordinates coordinates) {
