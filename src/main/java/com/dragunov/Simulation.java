@@ -26,7 +26,7 @@ public class Simulation {
         while (true) {
             try {
                 Simulation.nextTurn(maps);
-                herbivore.makeMove(maps, herbivore);
+                herbivore.makeMove(herbivore, maps.grass3);
                 Thread.sleep(1000);
             } catch (InterruptedException e) {}
 

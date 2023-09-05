@@ -1,12 +1,12 @@
 package com.dragunov;
 
 public class Coordinates {
-    private Vertical Vertical;
-    private Integer Horizontal;
+    private final Vertical Vertical;
+    private final Integer Horizontal;
 
-    public Coordinates (Integer Horizontal, Vertical vertical) {
-        this.Horizontal = Horizontal;
-        this.Vertical = vertical;
+    public Coordinates (Integer vertical, Vertical horizontal) {
+        this.Horizontal = vertical;
+        this.Vertical = horizontal;
     }
 
     public Coordinates setCoordinates (Coordinates coordinates) {

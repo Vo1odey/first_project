@@ -2,9 +2,7 @@ package com.dragunov;
 import com.dragunov.entities.*;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 //Карта, содержит в себе коллекцию для хранения существ
 //и их расположения.
@@ -16,16 +14,16 @@ public class Maps {
     Predator predator = new Predator(new Coordinates(3, Vertical.J),2,10,10);
     Grass grass = new Grass(new Coordinates(2, Vertical.D));
     Grass grass1 = new Grass(new Coordinates(4, Vertical.E));
-    Grass grass2 = new Grass(new Coordinates(4,Vertical.A));
-    Grass grass3 = new Grass(new Coordinates(1,Vertical.G));
+    Grass grass2 = new Grass(new Coordinates(4, Vertical.A));
+    Grass grass3 = new Grass(new Coordinates(1, Vertical.G));
 
     Rock rock = new Rock(new Coordinates(1, Vertical.E));
     Rock rock1 = new Rock(new Coordinates(2, Vertical.E));
     Rock rock2 = new Rock(new Coordinates(3, Vertical.E));
 
     Tree tree = new Tree(new Coordinates(3, Vertical.B));
-    Tree tree1 = new Tree(new Coordinates(3,Vertical.A));
-    Tree tree2 = new Tree(new Coordinates(3,Vertical.C));
+    Tree tree1 = new Tree(new Coordinates(3, Vertical.A));
+    Tree tree2 = new Tree(new Coordinates(3, Vertical.C));
 
     public void setDefaultPosition () {
         entities.put(herbivore.getCoordinates(), herbivore);
