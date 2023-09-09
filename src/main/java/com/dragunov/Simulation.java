@@ -11,10 +11,16 @@ import java.util.ArrayList;
 
 public class Simulation {
     public static void main(String[] args) {
+        Simulation simulation = new Simulation();
         Maps maps = new Maps();
+        BFS bfs = new BFS();
         maps.setDefaultPosition();
 
-        Simulation.startSimulation(maps, maps.herbivore);
+
+
+            simulation.startSimulation(maps);
+
+
     }
     //Просимулировать и отрендерить следующий ход
     static void nextTurn(Maps maps){
@@ -22,11 +28,20 @@ public class Simulation {
         MapConsoleRenderer.mapRendering(maps);
     }
     //Запустить бесконечный цикл симуляции и рендеринга
-    static void startSimulation(Maps maps, Herbivore herbivore){
+    void startSimulation(Maps map){
         while (true) {
             try {
-                Simulation.nextTurn(maps);
-                herbivore.makeMove(herbivore, maps.grass3);
+                Simulation.nextTurn(map);
+                map.predator.makeMove(map.predator, map);
+                if (map.entities.get(map.herbivore.getCoordinates()) instanceof Herbivore) {
+                    map.herbivore.makeMove(map.herbivore, map);
+                }
+                if (map.entities.get(map.herbivore1.getCoordinates()) instanceof Herbivore) {
+                    map.herbivore1.makeMove(map.herbivore1, map);
+                }
+                if (map.entities.get(map.herbivore2.getCoordinates()) instanceof Herbivore) {
+                    map.herbivore2.makeMove(map.herbivore2, map);
+                }
                 Thread.sleep(1000);
             } catch (InterruptedException e) {}
 

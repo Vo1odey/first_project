@@ -18,7 +18,7 @@ public class MapConsoleRenderer {
         }
 
             int a;
-            System.out.println("    A   B   C   D   E   F   G   J");
+            System.out.println("    A   B   C   D   E   F   G   J   H   I   K   L   M");
             for (int i = 1; i < 9; i++) {   //Столбик
                 System.out.print(i + "\t");
                 for (Vertical type : types) {   //Строка

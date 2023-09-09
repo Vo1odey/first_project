@@ -7,8 +7,8 @@ import com.dragunov.*;
 //Наследники будут реализовывать этот метод каждый по-своему.
 //Entities.Creature - существо.
 public class Creature extends Entity {
-    Integer speed;
-    Integer hp;
+    private Integer speed;
+    private Integer hp;
 
 
     public Creature (Coordinates coordinates, int speed, int hp, String picture) {
@@ -18,7 +18,9 @@ public class Creature extends Entity {
     }
     public Creature(){}
 
-
+    public Integer getSpeed(){
+        return speed;
+    }
 
     void makeMove(){
 
