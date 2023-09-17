@@ -11,15 +11,15 @@ public class MapConsoleRenderer {
         ArrayList<String> pictureList = new ArrayList<>();
         Vertical[] types = Vertical.values();
 
-        for (Coordinates key : maps.entities.keySet()) {
-            Entity value = maps.entities.get(key);
+        for (Coordinates key : maps.getKeySet()) {
+            Entity value = maps.getValue(key);
             keyList.add(String.valueOf(key));
             pictureList.add(value.toString());
         }
 
             int a;
-            System.out.println("    A   B   C   D   E   F   G   J   H   I   K   L   M");
-            for (int i = 1; i < 9; i++) {   //Столбик
+            System.out.println("    A   B   C   D   E   F   G   H   I   J   K   L   M");
+            for (int i = 1; i < 11; i++) {   //Столбик
                 System.out.print(i + "\t");
                 for (Vertical type : types) {   //Строка
                     for (a = 0; a < keyList.size(); a++) {

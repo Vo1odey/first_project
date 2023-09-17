@@ -17,20 +17,30 @@ public class Predator extends Creature {
     public Predator(){}
     int count = 0;
     BFS bfs = new BFS();
-    static List<Coordinates> patch;
+    GenerateEntity generate = new GenerateEntity();
+
     @Override
     public String toString() {
         return picture;
     }
-    public void makeMove (Predator predator, Maps map){
-        eat(predator,map);
-        patch = bfs.shortCut(predator, map);
-        int i = patch.size() - 1;
-        map.removeFromMap(predator.getCoordinates());
-        predator.setCoordinates(patch.get(i - 1));
-        map.addToMap(predator.getCoordinates(), predator);
+    public void makeMove (Predator predator, Maps map) {
+        try {
+        if ((map.getValue(predator.getCoordinates()) instanceof Predator)){
+        generate.generateGoalEntity(predator, map);
+        attack(predator, map);
+        Stack<Coordinates> patch = bfs.shortCut(predator, map);
+        if (patch.size() != 2) {
+            patch.pop();
+            map.removeFromMap(predator.getCoordinates());
+            predator.setCoordinates(patch.pop());
+            map.mapPut(predator.getCoordinates(), predator);
+        }
+            }
+        } catch (EmptyStackException e) {
+            makeMove();
+        }
     }
-    public void eat (Predator predator, Maps map) {
+    private void attack(Predator predator, Maps map) {
         Coordinates goal = bfs.nextQPoll(predator,map);
 
 
@@ -38,6 +48,8 @@ public class Predator extends Creature {
         Vertical[] upCrd = Vertical.values();
         Coordinates node = predator.getCoordinates();
         Coordinates left = null;
+        Coordinates leftMinus = null;
+        Coordinates leftPlus = null;
         Coordinates right = null;
         Coordinates up = null;
         Coordinates down = null;
@@ -47,8 +59,18 @@ public class Predator extends Creature {
             left = new Coordinates(node.getHorizontal() ,upCrd[node.getVertical().ordinal() - 1]);
             qCrd.add(left);
         }
+        //initialize left\
+        if ((node.getVertical().ordinal() - 1 != -1) && (node.getHorizontal() - 1 != 0)) {
+            leftMinus = new Coordinates(node.getHorizontal() - 1 ,upCrd[node.getVertical().ordinal() - 1]);
+            qCrd.add(leftMinus);
+        }
+        //initialize left\
+        if ((node.getVertical().ordinal() + 1 != 13) && (node.getHorizontal() + 1 != 11)) {
+            leftPlus = new Coordinates(node.getHorizontal() + 1 ,upCrd[node.getVertical().ordinal() + 1]);
+            qCrd.add(leftPlus);
+        }
         //initialize right
-        if ((node.getVertical().ordinal() + 1 != 8)) {
+        if ((node.getVertical().ordinal() + 1 != 13)) {
             right = new Coordinates(node.getHorizontal() ,upCrd[node.getVertical().ordinal() + 1]);
             qCrd.add(right);
         }
@@ -58,16 +80,21 @@ public class Predator extends Creature {
             qCrd.add(up);
         }
         //initialize down
-        if ((node.getHorizontal() + 1 != 9)) {
+        if ((node.getHorizontal() + 1 != 11)) {
             down = new Coordinates(node.getHorizontal() + 1 ,upCrd[node.getVertical().ordinal()]);
             qCrd.add(down);
         }
 
         while (!qCrd.isEmpty()) {
-            if (map.getValue(qCrd.poll()).equals(map.getValue(goal))) {
-                map.removeFromMap(goal);
-                count++;
-                System.out.println("                                                        Om nom nom! " + count);
+            qCrd.poll();
+            if (map.getValue(qCrd.peek()) instanceof Herbivore herbivore) {
+                herbivore.setHp(herbivore.getHp() - predator.attack);
+                System.out.println(herbivore.getHp() + " Attack!");
+                if (herbivore.getHp() <= 0) {
+                    map.removeFromMap(goal);
+                    count++;
+                    System.out.println("Om nom nom! " + count + " mouse");
+                }
             }
         }
     }

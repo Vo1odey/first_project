@@ -21,7 +21,12 @@ public class Creature extends Entity {
     public Integer getSpeed(){
         return speed;
     }
-
+    public Integer getHp(){
+        return hp;
+    }
+    public void setHp(Integer hp){
+        this.hp = hp;
+    }
     void makeMove(){
 
     }
