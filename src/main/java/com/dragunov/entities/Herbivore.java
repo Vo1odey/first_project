@@ -14,7 +14,7 @@ public class Herbivore extends Creature {
     GenerateEntity generate = new GenerateEntity();
 
     public Herbivore (Coordinates coordinates, int speed, int hp) {
-        super(coordinates, speed, hp, "🐭");
+        super(coordinates, speed, hp, "\uD83D\uDEA3");
     }
     public Herbivore getHerbivore(Herbivore herbivore){
         return herbivore;
@@ -25,23 +25,27 @@ public class Herbivore extends Creature {
         return picture;
     }
 
+    public void makeMove (Maps map) {
+        List<Herbivore> hrbList = bfs.getHrbList(map);
+        Herbivore herbivore;
+        Queue<Herbivore> qHrb = new LinkedList<>(hrbList);
 
-    public void makeMove (Herbivore herbivore, Maps map){
-        List <Herbivore> hrbList = new ArrayList<>();
-        Queue<Coordinates> queue;
-        //fearPredator(herbivore, map);
-        //eat(herbivore, map);
-        if ((map.getValue(herbivore.getCoordinates()) instanceof Herbivore)){
-            generate.generateGoalEntity(herbivore, map);
-            Stack<Coordinates> patch = bfs.shortCut(herbivore, map);
-        if (!patch.isEmpty()) {
-            patch.pop();
-            if (map.getValue(patch.peek()) instanceof Herbivore){
-                patch.pop();
-            }
-            map.removeFromMap(herbivore.getCoordinates());
-            herbivore.setCoordinates(patch.pop());
-            map.mapPut(herbivore.getCoordinates(), herbivore);
+        while (!qHrb.isEmpty()){
+            herbivore = qHrb.poll();
+            eat(herbivore, map);
+            if ((map.getValue(herbivore.getCoordinates()) instanceof Herbivore)) {
+                generate.generateGoalEntity(herbivore, map);
+                Stack<Coordinates> patch = bfs.shortCut(herbivore, map);
+                if (!patch.isEmpty()) {
+                    patch.pop();
+                    if (map.getValue(patch.peek()) instanceof Herbivore) {
+                        //System.out.println("Не ходить на мышь!");
+                        patch.pop();
+                    }
+                    map.removeFromMap(herbivore.getCoordinates());
+                    herbivore.setCoordinates(patch.pop());
+                    map.mapPut(herbivore.getCoordinates(), herbivore);
+                }
             }
         }
     }
@@ -114,7 +118,8 @@ public class Herbivore extends Creature {
         while (!qCrd.isEmpty()) {
             goal = qCrd.poll();
             if (map.getValue(goal) instanceof Grass) {
-                map.removeFromMap(qCrd.poll());
+                map.removeFromMap(goal);
+
             }
         }
     }

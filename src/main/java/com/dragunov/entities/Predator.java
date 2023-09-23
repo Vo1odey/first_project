@@ -11,7 +11,7 @@ import java.util.*;
 public class Predator extends Creature {
     int attack;
     public Predator (Coordinates coordinates, int speed, int hp, int attack){
-        super(coordinates, speed, hp, "🐱");
+        super(coordinates, speed, hp, "\uD83E\uDD88");
         this.attack = attack;
     }
     public Predator(){}
@@ -43,14 +43,18 @@ public class Predator extends Creature {
     private void attack(Predator predator, Maps map) {
         Coordinates goal = bfs.nextQPoll(predator,map);
 
-
         Queue <Coordinates> qCrd = new LinkedList<>();
         Vertical[] upCrd = Vertical.values();
         Coordinates node = predator.getCoordinates();
+
         Coordinates left = null;
-        Coordinates leftMinus = null;
-        Coordinates leftPlus = null;
+        Coordinates leftUp = null;
+        Coordinates leftDown = null;
+
         Coordinates right = null;
+        Coordinates rightUp = null;
+        Coordinates rightDown = null;
+
         Coordinates up = null;
         Coordinates down = null;
 
@@ -59,16 +63,30 @@ public class Predator extends Creature {
             left = new Coordinates(node.getHorizontal() ,upCrd[node.getVertical().ordinal() - 1]);
             qCrd.add(left);
         }
-        //initialize left\
+        //initialize leftUp ^<-
         if ((node.getVertical().ordinal() - 1 != -1) && (node.getHorizontal() - 1 != 0)) {
-            leftMinus = new Coordinates(node.getHorizontal() - 1 ,upCrd[node.getVertical().ordinal() - 1]);
-            qCrd.add(leftMinus);
+            leftUp = new Coordinates(node.getHorizontal() - 1, upCrd[node.getVertical().ordinal() - 1]);
+            qCrd.add(leftUp);
         }
-        //initialize left\
+
+        //initialize leftDown v<-
+        if ((node.getVertical().ordinal() - 1 != -1) && (node.getHorizontal() + 1 != 11)) {
+            leftDown = new Coordinates(node.getHorizontal() + 1, upCrd[node.getVertical().ordinal() - 1]);
+            qCrd.add(leftDown);
+        }
+
+        //initialize rightUp ->^
+        if ((node.getVertical().ordinal() + 1 != 13) && (node.getHorizontal() - 1 != 0)) {
+            rightUp = new Coordinates(node.getHorizontal() - 1 , upCrd[node.getVertical().ordinal() + 1]);
+            qCrd.add(rightUp);
+        }
+
+        //initialize rightDown ->V
         if ((node.getVertical().ordinal() + 1 != 13) && (node.getHorizontal() + 1 != 11)) {
-            leftPlus = new Coordinates(node.getHorizontal() + 1 ,upCrd[node.getVertical().ordinal() + 1]);
-            qCrd.add(leftPlus);
+            rightDown = new Coordinates(node.getHorizontal() + 1 , upCrd[node.getVertical().ordinal() + 1]);
+            qCrd.add(rightDown);
         }
+
         //initialize right
         if ((node.getVertical().ordinal() + 1 != 13)) {
             right = new Coordinates(node.getHorizontal() ,upCrd[node.getVertical().ordinal() + 1]);
@@ -89,11 +107,12 @@ public class Predator extends Creature {
             qCrd.poll();
             if (map.getValue(qCrd.peek()) instanceof Herbivore herbivore) {
                 herbivore.setHp(herbivore.getHp() - predator.attack);
-                System.out.println(herbivore.getHp() + " Attack!");
+                //System.out.println(herbivore.getHp() + " Attack!");
                 if (herbivore.getHp() <= 0) {
                     map.removeFromMap(goal);
+                    map.mapPut(goal, new DeathValue());
                     count++;
-                    System.out.println("Om nom nom! " + count + " mouse");
+                    //System.out.println("Om nom nom! " + count + " mouse");
                 }
             }
         }

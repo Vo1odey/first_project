@@ -5,7 +5,7 @@ import com.dragunov.Coordinates;
 public class Earth extends Entity{
 
     public Earth(Coordinates coordinates) {
-        super(coordinates, "🟫️");
+        super(coordinates, "\uD83D\uDFE6️");
     }
 
     @Override

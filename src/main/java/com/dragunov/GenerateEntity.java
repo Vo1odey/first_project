@@ -29,17 +29,17 @@ public class GenerateEntity {
                 map.mapPut(grassX.getCoordinates(), grassX);
             }
         }
+        List <Coordinates> randomValues = new ArrayList<>();
+        randomValues.add(new Coordinates(2, Vertical.H));
+        randomValues.add(new Coordinates(8, Vertical.L));
+
+        Coordinates randomSpawn = randomValues.get(random.nextInt(2));
+
         if (map.getValue(start.getCoordinates()) instanceof Predator) {
-            if (count < 2) {
-                map.mapPut(new Coordinates(2, Vertical.H),
-                        (new Herbivore(new Coordinates(2, Vertical.H),1, 10)));
-                queue = bfs.qGoal(start, map);
-                while (!queue.isEmpty()){
-                    hrbList.add((Herbivore) map.getValue(queue.poll()));
-                }
-            }
-            for (Herbivore hrb:hrbList) {
-                hrb.makeMove(hrb, map);
+            int countHrb = bfs.getHrbList(map).size();
+            if (countHrb < 3) {
+                map.mapPut(randomSpawn,
+                        (new Herbivore(randomSpawn,1, 10)));
             }
         }
     }

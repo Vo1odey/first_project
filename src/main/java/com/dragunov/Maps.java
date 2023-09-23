@@ -15,6 +15,7 @@ public class Maps {
 
 
     MouseHouse mouseHouse = new MouseHouse(new Coordinates(2, Vertical.G));
+    MouseHouse mouseHouse1 = new MouseHouse(new Coordinates(9, Vertical.L));
 
     Herbivore herbivore1 = new Herbivore(new Coordinates(1, Vertical.A),1 ,10);
     Herbivore herbivore2 = new Herbivore(new Coordinates(7,Vertical.J),1, 10);
@@ -22,7 +23,7 @@ public class Maps {
 
     Predator predator = new Predator(new Coordinates(3, Vertical.J),2,10,5);
 
-    Grass grass1 = new Grass(new Coordinates(5, Vertical.E));
+    Grass grass1 = new Grass(new Coordinates(3, Vertical.F));
     Grass grass2 = new Grass(new Coordinates(9, Vertical.E));
     Grass grass3 = new Grass(new Coordinates(10, Vertical.M));
     Grass grass4 = new Grass(new Coordinates(8, Vertical.J));
@@ -45,22 +46,22 @@ public class Maps {
     Rock rock12 = new Rock(new Coordinates(10, Vertical.K));
     Rock rock13 = new Rock(new Coordinates(9, Vertical.K));
     Rock rock14 = new Rock(new Coordinates(10, Vertical.J));
-    Rock rock15 = new Rock(new Coordinates(3, Vertical.M));
-    Rock rock16 = new Rock(new Coordinates(4, Vertical.M));
-    Rock rock17 = new Rock(new Coordinates(5, Vertical.M));
+    //Rock rock15 = new Rock(new Coordinates(3, Vertical.M));
+    //Rock rock16 = new Rock(new Coordinates(4, Vertical.M));
+    //Rock rock17 = new Rock(new Coordinates(5, Vertical.M));
     Rock rock18 = new Rock(new Coordinates(3, Vertical.L));
     Rock rock19 = new Rock(new Coordinates(4, Vertical.K));
     Rock rock20 = new Rock(new Coordinates(4, Vertical.J));
     Rock rock21 = new Rock(new Coordinates(5, Vertical.K));
     Rock rock22 = new Rock(new Coordinates(6, Vertical.L));
-    Rock rock23 = new Rock(new Coordinates(7, Vertical.M));
+    //Rock rock23 = new Rock(new Coordinates(7, Vertical.M));
     Rock rock24 = new Rock(new Coordinates(4, Vertical.L));
     Rock rock25 = new Rock(new Coordinates(5, Vertical.L));
-    Rock rock26 = new Rock(new Coordinates(6, Vertical.M));
+    //Rock rock26 = new Rock(new Coordinates(6, Vertical.M));
 
     Tree tree0 = new Tree(new Coordinates(3, Vertical.B));
     Tree tree1 = new Tree(new Coordinates(3, Vertical.A));
-    Tree tree2 = new Tree(new Coordinates(3, Vertical.C));
+    //Tree tree2 = new Tree(new Coordinates(3, Vertical.C));
     Tree tree3 = new Tree(new Coordinates(4, Vertical.C));
     Tree tree4 = new Tree(new Coordinates(4, Vertical.B));
     Tree tree5 = new Tree(new Coordinates(2, Vertical.A));
@@ -88,6 +89,7 @@ public class Maps {
 
     public void setDefaultPosition () {
         entities.put(mouseHouse.getCoordinates(), mouseHouse);
+        entities.put(mouseHouse1.getCoordinates(), mouseHouse1);
 
         entities.put(herbivore1.getCoordinates(), herbivore1);
         entities.put(herbivore2.getCoordinates(), herbivore2);
@@ -118,23 +120,23 @@ public class Maps {
         entities.put(rock12.getCoordinates(), rock12);
         entities.put(rock13.getCoordinates(), rock13);
         entities.put(rock14.getCoordinates(), rock14);
-        entities.put(rock15.getCoordinates(), rock15);
-        entities.put(rock16.getCoordinates(), rock16);
-        entities.put(rock17.getCoordinates(), rock17);
+        //entities.put(rock15.getCoordinates(), rock15);
+        //entities.put(rock16.getCoordinates(), rock16);
+        //entities.put(rock17.getCoordinates(), rock17);
         entities.put(rock18.getCoordinates(), rock18);
         entities.put(rock19.getCoordinates(), rock19);
         entities.put(rock20.getCoordinates(), rock20);
         entities.put(rock21.getCoordinates(), rock21);
         entities.put(rock22.getCoordinates(), rock22);
-        entities.put(rock23.getCoordinates(), rock23);
+        //entities.put(rock23.getCoordinates(), rock23);
         entities.put(rock24.getCoordinates(), rock24);
         entities.put(rock25.getCoordinates(), rock25);
-        entities.put(rock26.getCoordinates(), rock26);
+        //entities.put(rock26.getCoordinates(), rock26);
 
 
         entities.put(tree0.getCoordinates(), tree0);
         entities.put(tree1.getCoordinates(), tree1);
-        entities.put(tree2.getCoordinates(), tree2);
+        //entities.put(tree2.getCoordinates(), tree2);
         entities.put(tree3.getCoordinates(), tree3);
         entities.put(tree4.getCoordinates(), tree4);
         entities.put(tree5.getCoordinates(), tree5);

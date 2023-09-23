@@ -7,7 +7,7 @@ import java.util.*;
 // Ресурс для травоядных. Entities.Grass - трава.
 public class Grass extends Entity {
     public Grass (Coordinates coordinates) {
-        super(coordinates,"🧀");
+        super(coordinates,"\uD83E\uDD9E");
 
     }
     public Grass(){
