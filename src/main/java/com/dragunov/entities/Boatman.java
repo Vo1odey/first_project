@@ -11,12 +11,12 @@ import java.util.*;
 //травы, либо на её поглощение.
 public class Boatman extends Creature {
     BFS bfs = new BFS();
-    CreatureGenerator generate = new CreatureGenerator();
+    CreatureGenerator createNewBoatman = new CreatureGenerator();
 
     public Boatman(Coordinates coordinates, int speed, int hp) {
         super(coordinates, speed, hp, "\uD83D\uDEA3");
     }
-    public Boatman getHerbivore(Boatman boatman){
+    public Boatman getBoatman(Boatman boatman){
         return boatman;
     }
     public Boatman(){}
@@ -26,100 +26,66 @@ public class Boatman extends Creature {
     }
 
     public void makeMove (Field map) {
-        List<Boatman> hrbList = bfs.getHrbList(map);
-        Boatman boatman;
-        Queue<Boatman> qHrb = new LinkedList<>(hrbList);
+        List<Boatman> boatmen = bfs.getAllBoatmen(map);
+        Queue<Boatman> qBoatmen = new LinkedList<>(boatmen);
+        Stack<Coordinates> pathToCancer;
+        Boatman nextBoatman;
 
-        while (!qHrb.isEmpty()){
-            boatman = qHrb.poll();
-            eat(boatman, map);
-            if ((map.getValue(boatman.getCoordinates()) instanceof Boatman)) {
-                generate.generateGoalEntity(boatman, map);
-                Stack<Coordinates> patch = bfs.shortCut(boatman, map);
-                if (!patch.isEmpty()) {
-                    patch.pop();
-                    if (map.getValue(patch.peek()) instanceof Boatman) {
-                        //System.out.println("Не ходить на мышь!");
-                        patch.pop();
+        while (!qBoatmen.isEmpty()){
+            nextBoatman = qBoatmen.poll();
+            lookForCancer(nextBoatman, map);
+            if (map.getValue(nextBoatman.getCoordinates()) instanceof Boatman) {
+                createNewBoatman.generateGoalEntity(nextBoatman, map);
+                pathToCancer = bfs.destination(nextBoatman, map);
+                if (!pathToCancer.isEmpty()) {
+                    pathToCancer.pop();
+                    if (map.getValue(pathToCancer.peek()) instanceof Boatman) {
+                        continue;
                     }
-                    map.removeFromMap(boatman.getCoordinates());
-                    boatman.setCoordinates(patch.pop());
-                    map.mapPut(boatman.getCoordinates(), boatman);
+                    map.removeFromMap(nextBoatman.getCoordinates());
+                    nextBoatman.setCoordinates(pathToCancer.pop());
+                    map.mapPut(nextBoatman.getCoordinates(), nextBoatman);
                 }
             }
         }
     }
-    public void fearPredator (Boatman boatman, Field map) {
-        Coordinates left = null;
-        Coordinates right = null;
-        Coordinates up = null;
-        Coordinates down = null;
 
-        Queue <Coordinates> qCrd = new LinkedList<>();
-        Column[] upCrd = Column.values();
+    public void lookForCancer(Boatman boatman, Field map){
+        Coordinates left;
+        Coordinates right;
+        Coordinates up;
+        Coordinates down;
+
+        Queue <Coordinates> lookAround = new LinkedList<>();
+        Column[] columnValues = Column.values();
         Coordinates node = boatman.getCoordinates();
-        //initialize left
-        if ((node.getVertical().ordinal() - 1 != -1)) {
-            left = new Coordinates(node.getHorizontal() ,upCrd[node.getVertical().ordinal() - 1]);
-            qCrd.add(left);
-        }
-        //initialize right
-        if ((node.getVertical().ordinal() + 1 != 13)) {
-            right = new Coordinates(node.getHorizontal() ,upCrd[node.getVertical().ordinal() + 1]);
-            qCrd.add(right);
-        }
-        //initialize up
-        if ((node.getHorizontal() - 1 != 0)) {
-            up = new Coordinates(node.getHorizontal() - 1 ,upCrd[node.getVertical().ordinal()]);
-            qCrd.add(up);
-        }
-        //initialize down
-        if ((node.getHorizontal() + 1 != 11)) {
-            down = new Coordinates(node.getHorizontal() + 1 ,upCrd[node.getVertical().ordinal()]);
-            qCrd.add(down);
-        }
-        while (!qCrd.isEmpty()) {
-            if (map.getValue(qCrd.poll()) instanceof Shark) {
-                System.out.println("there's a cat nearby!");
 
-            }
+        //look left
+        if ((node.getY().ordinal() - 1) != -1) {
+            left = new Coordinates(node.getX() ,columnValues[node.getY().ordinal() - 1]);
+            lookAround.add(left);
         }
-    }
-    public void eat (Boatman boatman, Field map){
-        Coordinates left = null;
-        Coordinates right = null;
-        Coordinates up = null;
-        Coordinates down = null;
+        //look right
+        if ((node.getY().ordinal() + 1) != 13) {
+            right = new Coordinates(node.getX() ,columnValues[node.getY().ordinal() + 1]);
+            lookAround.add(right);
+        }
+        //look up
+        if ((node.getX() - 1) != 0) {
+            up = new Coordinates(node.getX() - 1 ,columnValues[node.getY().ordinal()]);
+            lookAround.add(up);
+        }
+        //look down
+        if ((node.getX() + 1) != 11) {
+            down = new Coordinates(node.getX() + 1 ,columnValues[node.getY().ordinal()]);
+            lookAround.add(down);
+        }
 
-        Queue <Coordinates> qCrd = new LinkedList<>();
-        Column[] upCrd = Column.values();
-        Coordinates node = boatman.getCoordinates();
         Coordinates goal;
-        //initialize left
-        if ((node.getVertical().ordinal() - 1 != -1)) {
-            left = new Coordinates(node.getHorizontal() ,upCrd[node.getVertical().ordinal() - 1]);
-            qCrd.add(left);
-        }
-        //initialize right
-        if ((node.getVertical().ordinal() + 1 != 13)) {
-            right = new Coordinates(node.getHorizontal() ,upCrd[node.getVertical().ordinal() + 1]);
-            qCrd.add(right);
-        }
-        //initialize up
-        if ((node.getHorizontal() - 1 != 0)) {
-            up = new Coordinates(node.getHorizontal() - 1 ,upCrd[node.getVertical().ordinal()]);
-            qCrd.add(up);
-        }
-        //initialize down
-        if ((node.getHorizontal() + 1 != 11)) {
-            down = new Coordinates(node.getHorizontal() + 1 ,upCrd[node.getVertical().ordinal()]);
-            qCrd.add(down);
-        }
-        while (!qCrd.isEmpty()) {
-            goal = qCrd.poll();
+        while (!lookAround.isEmpty()) {
+            goal = lookAround.poll();
             if (map.getValue(goal) instanceof Cancer) {
                 map.removeFromMap(goal);
-
             }
         }
     }

@@ -53,12 +53,12 @@ public class Simulation {
             }
         }
     }
-    //Просимулировать и отрендерить следующий ход
+
     static void nextTurn(Field map){
         map.setAllEarth();
         MapConsoleRenderer.mapRendering(map);
     }
-    //Запустить бесконечный цикл симуляции и рендеринга
+
     void startSimulation(Field map){
         Boatman boatman = new Boatman();
         Simulation.nextTurn(map);
@@ -66,22 +66,21 @@ public class Simulation {
         boatman.makeMove(map);
     }
 
-    //Приостановить бесконечный цикл симуляции и рендеринга
     boolean pauseSimulation() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String c = "c";
+        String input = "c";
         for (int i = 0; i < 1; i++) {
             try {
-                Thread.sleep(1200);
+                Thread.sleep(900);
                 if (System.in.available() > 0) {
-                    c = reader.readLine();
+                    input = reader.readLine();
                     break;
                 }
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
-        switch (c) {
+        switch (input) {
             case "q" -> {
                 System.out.println("Выход.");
                 question = false;
@@ -91,8 +90,8 @@ public class Simulation {
                 System.out.println("Пауза.");
                 System.out.println("\t1) C - продолжить;");
                 System.out.println("\t2) Q - выход.");
-                c = reader.readLine();
-                if (c.equals("q")) {
+                input = reader.readLine();
+                if (input.equals("q")) {
                     question = false;
                     return false;}
             }

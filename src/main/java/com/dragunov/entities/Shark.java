@@ -14,7 +14,6 @@ public class Shark extends Creature {
         super(coordinates, speed, hp, "\uD83E\uDD88");
         this.attack = attack;
     }
-    public Shark(){}
     int count = 0;
     BFS bfs = new BFS();
     CreatureGenerator generate = new CreatureGenerator();
@@ -28,7 +27,7 @@ public class Shark extends Creature {
         if ((map.getValue(shark.getCoordinates()) instanceof Shark)){
         generate.generateGoalEntity(shark, map);
         attack(shark, map);
-        Stack<Coordinates> patch = bfs.shortCut(shark, map);
+        Stack<Coordinates> patch = bfs.destination(shark, map);
         if (patch.size() != 2) {
             patch.pop();
             map.removeFromMap(shark.getCoordinates());
@@ -41,7 +40,7 @@ public class Shark extends Creature {
         }
     }
     private void attack(Shark shark, Field map) {
-        Coordinates goal = bfs.nextQPoll(shark,map);
+        Coordinates goal = bfs.poll(shark,map);
 
         Queue <Coordinates> qCrd = new LinkedList<>();
         Column[] upCrd = Column.values();
@@ -59,47 +58,47 @@ public class Shark extends Creature {
         Coordinates down = null;
 
         //initialize left
-        if ((node.getVertical().ordinal() - 1 != -1)) {
-            left = new Coordinates(node.getHorizontal() ,upCrd[node.getVertical().ordinal() - 1]);
+        if ((node.getY().ordinal() - 1 != -1)) {
+            left = new Coordinates(node.getX() ,upCrd[node.getY().ordinal() - 1]);
             qCrd.add(left);
         }
         //initialize leftUp ^<-
-        if ((node.getVertical().ordinal() - 1 != -1) && (node.getHorizontal() - 1 != 0)) {
-            leftUp = new Coordinates(node.getHorizontal() - 1, upCrd[node.getVertical().ordinal() - 1]);
+        if ((node.getY().ordinal() - 1 != -1) && (node.getX() - 1 != 0)) {
+            leftUp = new Coordinates(node.getX() - 1, upCrd[node.getY().ordinal() - 1]);
             qCrd.add(leftUp);
         }
 
         //initialize leftDown v<-
-        if ((node.getVertical().ordinal() - 1 != -1) && (node.getHorizontal() + 1 != 11)) {
-            leftDown = new Coordinates(node.getHorizontal() + 1, upCrd[node.getVertical().ordinal() - 1]);
+        if ((node.getY().ordinal() - 1 != -1) && (node.getX() + 1 != 11)) {
+            leftDown = new Coordinates(node.getX() + 1, upCrd[node.getY().ordinal() - 1]);
             qCrd.add(leftDown);
         }
 
         //initialize rightUp ->^
-        if ((node.getVertical().ordinal() + 1 != 13) && (node.getHorizontal() - 1 != 0)) {
-            rightUp = new Coordinates(node.getHorizontal() - 1 , upCrd[node.getVertical().ordinal() + 1]);
+        if ((node.getY().ordinal() + 1 != 13) && (node.getX() - 1 != 0)) {
+            rightUp = new Coordinates(node.getX() - 1 , upCrd[node.getY().ordinal() + 1]);
             qCrd.add(rightUp);
         }
 
         //initialize rightDown ->V
-        if ((node.getVertical().ordinal() + 1 != 13) && (node.getHorizontal() + 1 != 11)) {
-            rightDown = new Coordinates(node.getHorizontal() + 1 , upCrd[node.getVertical().ordinal() + 1]);
+        if ((node.getY().ordinal() + 1 != 13) && (node.getX() + 1 != 11)) {
+            rightDown = new Coordinates(node.getX() + 1 , upCrd[node.getY().ordinal() + 1]);
             qCrd.add(rightDown);
         }
 
         //initialize right
-        if ((node.getVertical().ordinal() + 1 != 13)) {
-            right = new Coordinates(node.getHorizontal() ,upCrd[node.getVertical().ordinal() + 1]);
+        if ((node.getY().ordinal() + 1 != 13)) {
+            right = new Coordinates(node.getX() ,upCrd[node.getY().ordinal() + 1]);
             qCrd.add(right);
         }
         //initialize up
-        if ((node.getHorizontal() - 1 != 0)) {
-            up = new Coordinates(node.getHorizontal() - 1 ,upCrd[node.getVertical().ordinal()]);
+        if ((node.getX() - 1 != 0)) {
+            up = new Coordinates(node.getX() - 1 ,upCrd[node.getY().ordinal()]);
             qCrd.add(up);
         }
         //initialize down
-        if ((node.getHorizontal() + 1 != 11)) {
-            down = new Coordinates(node.getHorizontal() + 1 ,upCrd[node.getVertical().ordinal()]);
+        if ((node.getX() + 1 != 11)) {
+            down = new Coordinates(node.getX() + 1 ,upCrd[node.getY().ordinal()]);
             qCrd.add(down);
         }
 

@@ -1,24 +1,24 @@
 package com.dragunov;
 
 public class Coordinates {
-    private final Column Column;
-    private final Integer Horizontal;
+    private final Column Y;
+    private final Integer X;
 
-    public Coordinates (Integer vertical, Column horizontal) {
-        this.Horizontal = vertical;
-        this.Column = horizontal;
+    public Coordinates (Integer X, Column Y) {
+        this.X = X;
+        this.Y = Y;
     }
 
     public Coordinates setCoordinates (Coordinates coordinates) {
-        return new Coordinates(coordinates.Horizontal, coordinates.Column);
+        return new Coordinates(coordinates.X, coordinates.Y);
     }
 
-    public Column getVertical() {
-        return Column;
+    public Column getY() {
+        return Y;
     }
 
-    public Integer getHorizontal() {
-        return Horizontal;
+    public Integer getX() {
+        return X;
     }
 
     @Override
@@ -28,19 +28,19 @@ public class Coordinates {
 
         Coordinates that = (Coordinates) o;
 
-        if (Column != that.Column) return false;
-        return Horizontal.equals(that.Horizontal);
+        if (Y != that.Y) return false;
+        return X.equals(that.X);
     }
 
     @Override
     public int hashCode() {
-        int result = Column.hashCode();
-        result = 31 * result + Horizontal.hashCode();
+        int result = Y.hashCode();
+        result = 31 * result + X.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
-        return Horizontal + Column.toString();
+        return X + Y.toString();
     }
 }
