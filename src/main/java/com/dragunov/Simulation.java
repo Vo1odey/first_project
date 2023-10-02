@@ -1,12 +1,6 @@
 package com.dragunov;
 
-//Главный класс приложения включает в себя:
-//Карту, счетчик ходов, рендерер поля,
-//Action - список действий, исполняемых перед стартом симуляции
-//или на каждом ходу
-
-import com.dragunov.entities.Herbivore;
-
+import com.dragunov.entities.Boatman;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,8 +10,8 @@ public class Simulation {
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Simulation simulation = new Simulation();
-        Maps maps = new Maps();
-        maps.setDefaultPosition();
+        Field field = new Field();
+        field.setDefaultPosition();
 
         while (question) {
             System.out.println("-----------------");
@@ -30,34 +24,46 @@ public class Simulation {
             System.out.println("-----------------");
             String answer = reader.readLine();
             switch (answer) {
-                case "s":
+                case "s" -> {
                     while (simulation.pauseSimulation()) {
-                        simulation.startSimulation(maps);
+                        simulation.startSimulation(field);
                     }
-                    break;
-                case "q":
+                }
+                case "q" -> {
                     System.out.println("Выход.");
                     question = false;
-                    break;
-                case "r":
+                }
+                case "r" -> {
                     System.out.println("Описание:");
+                    System.out.println("\t\uD83D\uDFE6️ - вода\t\t\uD83D\uDEA3 - лодочник\t\uD83C\uDFE0 - дом лодочника");
+                    System.out.println("\t\uD83C\uDF34 - пальма\t\t\uD83E\uDD88 - акула");
+                    System.out.println("\t\uD83D\uDFE8 - песок\t\t\uD83E\uDD9E - рак");
+                    System.out.println();
+                    System.out.println("\t\uD83D\uDFE8 \uD83C\uDF34 - препятствия;");
+                    System.out.println();
+                    System.out.println("\t\uD83D\uDEA3 плавает по \uD83D\uDFE6 ищет на карте \uD83E\uDD9E;");
+                    System.out.println("\t\uD83E\uDD88 плавает по \uD83D\uDFE6 ищет на карте \uD83D\uDEA3;");
+                    System.out.println();
+                    System.out.println("Во время запуска:");
+                    System.out.println("\tq - Выход;");
+                    System.out.println("\tp - Пауза.");
                     System.out.println();
                     System.out.println();
-                    System.out.println();
+                }
             }
         }
     }
     //Просимулировать и отрендерить следующий ход
-    static void nextTurn(Maps map){
+    static void nextTurn(Field map){
         map.setAllEarth();
         MapConsoleRenderer.mapRendering(map);
     }
     //Запустить бесконечный цикл симуляции и рендеринга
-    void startSimulation(Maps map){
-        Herbivore herbivore = new Herbivore();
+    void startSimulation(Field map){
+        Boatman boatman = new Boatman();
         Simulation.nextTurn(map);
-        map.predator.makeMove(map.predator, map);
-        herbivore.makeMove(map);
+        map.shark.makeMove(map.shark, map);
+        boatman.makeMove(map);
     }
 
     //Приостановить бесконечный цикл симуляции и рендеринга

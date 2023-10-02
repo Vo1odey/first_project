@@ -2,8 +2,8 @@ package com.dragunov.entities;
 
 import com.dragunov.Coordinates;
 
-public class MouseHouse extends Entity{
-    public MouseHouse (Coordinates coordinates){
+public class House extends Entity{
+    public House(Coordinates coordinates){
         super(coordinates, "\uD83C\uDFE0");
     }
     @Override

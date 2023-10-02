@@ -7,11 +7,11 @@ import java.util.*;
 public class BFS {
     //Кратчайший путь от start к goal
 
-    private <T extends  Creature, V extends Entity> Map <Coordinates, Coordinates> bfs(T start, V goal, Maps map) {
+    private <T extends  Creature, V extends Entity> Map <Coordinates, Coordinates> bfs(T start, V goal, Field map) {
 
         Coordinates startCrd = start.getCoordinates();
 
-        Vertical[] upCrd = Vertical.values();
+        Column[] upCrd = Column.values();
         Coordinates node;
 
         Coordinates left = null;
@@ -36,16 +36,16 @@ public class BFS {
                 if (node.equals(goal.getCoordinates())) {
                     break;
                 }
-                if (map.getValue(startCrd) instanceof Herbivore) {
-                    if ((map.getValue(node) instanceof Rock) || (map.getValue(node) instanceof Tree)
-                            || (map.getValue(node) instanceof Predator) || (map.getValue(node) instanceof MouseHouse)
-                            || (map.getValue(node) instanceof Grass)) {
+                if (map.getValue(startCrd) instanceof Boatman) {
+                    if ((map.getValue(node) instanceof Palm) || (map.getValue(node) instanceof Sand)
+                            || (map.getValue(node) instanceof Shark) || (map.getValue(node) instanceof House)
+                            || (map.getValue(node) instanceof Cancer)) {
                         continue;
                     }
                 }
-                if (map.getValue(startCrd) instanceof Predator) {
-                    if ((map.getValue(node) instanceof Rock) || (map.getValue(node) instanceof Tree)
-                            || (map.getValue(node) instanceof Grass) || (map.getValue(node) instanceof MouseHouse)) {
+                if (map.getValue(startCrd) instanceof Shark) {
+                    if ((map.getValue(node) instanceof Palm) || (map.getValue(node) instanceof Sand)
+                            || (map.getValue(node) instanceof Cancer) || (map.getValue(node) instanceof House)) {
                         continue;
                     }
                 }
@@ -91,11 +91,11 @@ public class BFS {
         return visited;
     }
     //Очередь из ближайших искомых координат
-    public  <T extends  Creature> Queue<Coordinates> qGoal(T start, Maps map) {
+    public  <T extends  Creature> Queue<Coordinates> qGoal(T start, Field map) {
 
         Coordinates startCrd = start.getCoordinates();
         Queue <Coordinates> result = new LinkedList<>();
-        Vertical[] upValues = Vertical.values();
+        Column[] upValues = Column.values();
         Coordinates node;
 
         Coordinates left = null;
@@ -112,24 +112,24 @@ public class BFS {
         while (!qCrd.isEmpty()) {
 
             node = qCrd.poll();
-        if (map.getValue(startCrd) instanceof Herbivore) {
-            if (map.getValue(node) instanceof Grass) {
+        if (map.getValue(startCrd) instanceof Boatman) {
+            if (map.getValue(node) instanceof Cancer) {
                 result.add(node);
             }
-        } else if (map.getValue(startCrd) instanceof Predator) {
-            if (map.getValue(node) instanceof Herbivore) {
+        } else if (map.getValue(startCrd) instanceof Shark) {
+            if (map.getValue(node) instanceof Boatman) {
                 result.add(node);
             }
         }
-            if (map.getValue(startCrd) instanceof Herbivore) {
-                if ((map.getValue(node) instanceof Rock) || (map.getValue(node) instanceof Tree)
-                        || (map.getValue(node) instanceof Predator) || (map.getValue(node) instanceof MouseHouse)) {
+            if (map.getValue(startCrd) instanceof Boatman) {
+                if ((map.getValue(node) instanceof Palm) || (map.getValue(node) instanceof Sand)
+                        || (map.getValue(node) instanceof Shark) || (map.getValue(node) instanceof House)) {
                     continue;
                 }
             }
-            if (map.getValue(startCrd) instanceof Predator) {
-                if ((map.getValue(node) instanceof Rock) || (map.getValue(node) instanceof Tree)
-                        || (map.getValue(node) instanceof Grass) || (map.getValue(node) instanceof MouseHouse)) {
+            if (map.getValue(startCrd) instanceof Shark) {
+                if ((map.getValue(node) instanceof Palm) || (map.getValue(node) instanceof Sand)
+                        || (map.getValue(node) instanceof Cancer) || (map.getValue(node) instanceof House)) {
                     continue;
                 }
             }
@@ -175,12 +175,12 @@ public class BFS {
         return result;
     }
     //Извлечь следующую координату из очереди ближайших искомых координат
-    public <T extends Creature> Coordinates nextQPoll(T start, Maps map){
+    public <T extends Creature> Coordinates nextQPoll(T start, Field map){
         Queue<Coordinates> allGoal = qGoal(start, map);
         return allGoal.poll();
     }
     //
-    public <T extends Creature, V extends Entity> Stack<Coordinates> shortCut(T start, Maps map){
+    public <T extends Creature, V extends Entity> Stack<Coordinates> shortCut(T start, Field map){
         Stack<Coordinates> patch = new Stack<>();
         V goal = (V) map.getValue(nextQPoll(start, map));
         Map<Coordinates, Coordinates> visited = bfs(start, goal, map);
@@ -197,11 +197,11 @@ public class BFS {
         }
         return patch;
     }
-    public List<Herbivore> getHrbList(Maps map){
+    public List<Boatman> getHrbList(Field map){
 
-        Coordinates startCrd = new Coordinates(1,Vertical.A);
-        List <Herbivore> result = new ArrayList<>();
-        Vertical[] upValues = Vertical.values();
+        Coordinates startCrd = new Coordinates(1, Column.A);
+        List <Boatman> result = new ArrayList<>();
+        Column[] upValues = Column.values();
         Coordinates node;
 
         Coordinates left = null;
@@ -218,8 +218,8 @@ public class BFS {
         while (!qCrd.isEmpty()) {
 
             node = qCrd.poll();
-                if (map.getValue(node) instanceof Herbivore) {
-                    result.add((Herbivore) map.getValue(node));
+                if (map.getValue(node) instanceof Boatman) {
+                    result.add((Boatman) map.getValue(node));
                 }
 
 
