@@ -3,11 +3,6 @@ import com.dragunov.*;
 
 import java.util.*;
 
-//Хищник, наследуется от Entities.Creature. В дополнение к полям
-//класса Entities.Creature, имеет силу атаки. Может потратить ход:
-//Переместиться (приблизится к травоядному Entities.Herbivore)
-//Атаковать травоядное. При этом кол-во HP травоядного уменьшается
-//на силу атаки хищника. Если HP Entities.Herbivore == 0, оно исчезает.
 public class Shark extends Creature {
     int attack;
     public Shark(Coordinates coordinates, int speed, int hp, int attack){
@@ -30,9 +25,9 @@ public class Shark extends Creature {
         Stack<Coordinates> patch = bfs.destination(shark, map);
         if (patch.size() != 2) {
             patch.pop();
-            map.removeFromMap(shark.getCoordinates());
+            map.remove(shark.getCoordinates());
             shark.setCoordinates(patch.pop());
-            map.mapPut(shark.getCoordinates(), shark);
+            map.put(shark.getCoordinates(), shark);
         }
             }
         } catch (EmptyStackException e) {
@@ -46,16 +41,16 @@ public class Shark extends Creature {
         Column[] upCrd = Column.values();
         Coordinates node = shark.getCoordinates();
 
-        Coordinates left = null;
-        Coordinates leftUp = null;
-        Coordinates leftDown = null;
+        Coordinates left;
+        Coordinates leftUp;
+        Coordinates leftDown;
 
-        Coordinates right = null;
-        Coordinates rightUp = null;
-        Coordinates rightDown = null;
+        Coordinates right;
+        Coordinates rightUp;
+        Coordinates rightDown;
 
-        Coordinates up = null;
-        Coordinates down = null;
+        Coordinates up;
+        Coordinates down;
 
         //initialize left
         if ((node.getY().ordinal() - 1 != -1)) {
@@ -106,12 +101,10 @@ public class Shark extends Creature {
             qCrd.poll();
             if (map.getValue(qCrd.peek()) instanceof Boatman boatman) {
                 boatman.setHp(boatman.getHp() - shark.attack);
-                //System.out.println(herbivore.getHp() + " Attack!");
                 if (boatman.getHp() <= 0) {
-                    map.removeFromMap(goal);
-                    map.mapPut(goal, new DeadValue());
+                    map.remove(goal);
+                    map.put(goal, new DeadValue());
                     count++;
-                    //System.out.println("Om nom nom! " + count + " mouse");
                 }
             }
         }

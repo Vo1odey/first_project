@@ -23,7 +23,7 @@ public class CreatureGenerator {
                             columnValues[random.nextInt(13)]);
                 }
                 Cancer cancer = new Cancer(randomCoordinates);
-                map.mapPut(cancer.getCoordinates(), cancer);
+                map.put(cancer.getCoordinates(), cancer);
             }
         }
         if (map.getValue(start.getCoordinates()) instanceof Shark) {
@@ -34,7 +34,7 @@ public class CreatureGenerator {
 
             int countHrb = bfs.getAllBoatmen(map).size();
             if (countHrb < 3) {
-                map.mapPut(chooseHouse, (new Boatman(chooseHouse,1, 10)));
+                map.put(chooseHouse, (new Boatman(chooseHouse,1, 10)));
             }
         }
     }

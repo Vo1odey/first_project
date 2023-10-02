@@ -1,14 +1,9 @@
 package com.dragunov.entities;
+
 import com.dragunov.*;
 import com.dragunov.Field;
-
-
 import java.util.*;
 
-
-//Травоядное, наследуется от Entities.Creature. Стремится найти траву
-//(Entities.Grass), может потратить свой ход на движение в сторону
-//травы, либо на её поглощение.
 public class Boatman extends Creature {
     BFS bfs = new BFS();
     CreatureGenerator createNewBoatman = new CreatureGenerator();
@@ -42,9 +37,9 @@ public class Boatman extends Creature {
                     if (map.getValue(pathToCancer.peek()) instanceof Boatman) {
                         continue;
                     }
-                    map.removeFromMap(nextBoatman.getCoordinates());
+                    map.remove(nextBoatman.getCoordinates());
                     nextBoatman.setCoordinates(pathToCancer.pop());
-                    map.mapPut(nextBoatman.getCoordinates(), nextBoatman);
+                    map.put(nextBoatman.getCoordinates(), nextBoatman);
                 }
             }
         }
@@ -85,7 +80,7 @@ public class Boatman extends Creature {
         while (!lookAround.isEmpty()) {
             goal = lookAround.poll();
             if (map.getValue(goal) instanceof Cancer) {
-                map.removeFromMap(goal);
+                map.remove(goal);
             }
         }
     }

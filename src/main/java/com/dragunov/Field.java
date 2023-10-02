@@ -5,22 +5,21 @@ import java.util.*;
 
 public class Field {
 
-    private Map <Coordinates, Entity> entities = new HashMap<>();
+    private final Map <Coordinates, Entity> entities = new HashMap<>();
 
     public Set<Coordinates> getKeySet(){
         return entities.keySet();
     }
-
-
+//House
     House house = new House(new Coordinates(2, Column.G));
     House house1 = new House(new Coordinates(9, Column.L));
-
+//Boatman
     Boatman boatman1 = new Boatman(new Coordinates(1, Column.A),1 ,10);
     Boatman boatman2 = new Boatman(new Coordinates(7, Column.J),1, 10);
     Boatman boatman3 = new Boatman(new Coordinates(4, Column.A),1, 10);
-
+//Shark
     Shark shark = new Shark(new Coordinates(3, Column.J),2,10,5);
-
+//Cancer
     Cancer cancer1 = new Cancer(new Coordinates(3, Column.F));
     Cancer cancer2 = new Cancer(new Coordinates(9, Column.E));
     Cancer cancer3 = new Cancer(new Coordinates(10, Column.M));
@@ -28,7 +27,7 @@ public class Field {
     Cancer cancer5 = new Cancer(new Coordinates(9, Column.A));
     Cancer cancer6 = new Cancer(new Coordinates(7, Column.H));
     Cancer cancer7 = new Cancer(new Coordinates(1, Column.M));
-
+//Palm
     Palm palm = new Palm(new Coordinates(1, Column.E));
     Palm palm1 = new Palm(new Coordinates(2, Column.E));
     Palm palm2 = new Palm(new Coordinates(3, Column.E));
@@ -44,22 +43,16 @@ public class Field {
     Palm palm12 = new Palm(new Coordinates(10, Column.K));
     Palm palm13 = new Palm(new Coordinates(9, Column.K));
     Palm palm14 = new Palm(new Coordinates(10, Column.J));
-    //Rock rock15 = new Rock(new Coordinates(3, Vertical.M));
-    //Rock rock16 = new Rock(new Coordinates(4, Vertical.M));
-    //Rock rock17 = new Rock(new Coordinates(5, Vertical.M));
     Palm palm18 = new Palm(new Coordinates(3, Column.L));
     Palm palm19 = new Palm(new Coordinates(4, Column.K));
     Palm palm20 = new Palm(new Coordinates(4, Column.J));
     Palm palm21 = new Palm(new Coordinates(5, Column.K));
     Palm palm22 = new Palm(new Coordinates(6, Column.L));
-    //Rock rock23 = new Rock(new Coordinates(7, Vertical.M));
     Palm palm24 = new Palm(new Coordinates(4, Column.L));
     Palm palm25 = new Palm(new Coordinates(5, Column.L));
-    //Rock rock26 = new Rock(new Coordinates(6, Vertical.M));
-
+//Sand
     Sand sand0 = new Sand(new Coordinates(3, Column.B));
     Sand sand1 = new Sand(new Coordinates(3, Column.A));
-    //Tree tree2 = new Tree(new Coordinates(3, Vertical.C));
     Sand sand3 = new Sand(new Coordinates(4, Column.C));
     Sand sand4 = new Sand(new Coordinates(4, Column.B));
     Sand sand5 = new Sand(new Coordinates(2, Column.A));
@@ -84,17 +77,17 @@ public class Field {
     Sand sand24 = new Sand(new Coordinates(6, Column.I));
     Sand sand25 = new Sand(new Coordinates(8, Column.F));
 
-
-    public void setDefaultPosition () {
+    public void setDefaultPosition() {
+    //House
         entities.put(house.getCoordinates(), house);
         entities.put(house1.getCoordinates(), house1);
-
+    //Boatman
         entities.put(boatman1.getCoordinates(), boatman1);
         entities.put(boatman2.getCoordinates(), boatman2);
         entities.put(boatman3.getCoordinates(), boatman3);
-
+    //Shark
         entities.put(shark.getCoordinates(), shark);
-
+    //Cancer
         entities.put(cancer1.getCoordinates(), cancer1);
         entities.put(cancer2.getCoordinates(), cancer2);
         entities.put(cancer3.getCoordinates(), cancer3);
@@ -102,7 +95,7 @@ public class Field {
         entities.put(cancer5.getCoordinates(), cancer5);
         entities.put(cancer6.getCoordinates(), cancer6);
         entities.put(cancer7.getCoordinates(), cancer7);
-
+    //Palm
         entities.put(palm.getCoordinates(), palm);
         entities.put(palm1.getCoordinates(), palm1);
         entities.put(palm2.getCoordinates(), palm2);
@@ -118,23 +111,16 @@ public class Field {
         entities.put(palm12.getCoordinates(), palm12);
         entities.put(palm13.getCoordinates(), palm13);
         entities.put(palm14.getCoordinates(), palm14);
-        //entities.put(rock15.getCoordinates(), rock15);
-        //entities.put(rock16.getCoordinates(), rock16);
-        //entities.put(rock17.getCoordinates(), rock17);
         entities.put(palm18.getCoordinates(), palm18);
         entities.put(palm19.getCoordinates(), palm19);
         entities.put(palm20.getCoordinates(), palm20);
         entities.put(palm21.getCoordinates(), palm21);
         entities.put(palm22.getCoordinates(), palm22);
-        //entities.put(rock23.getCoordinates(), rock23);
         entities.put(palm24.getCoordinates(), palm24);
         entities.put(palm25.getCoordinates(), palm25);
-        //entities.put(rock26.getCoordinates(), rock26);
-
-
+    //Sand
         entities.put(sand0.getCoordinates(), sand0);
         entities.put(sand1.getCoordinates(), sand1);
-        //entities.put(tree2.getCoordinates(), tree2);
         entities.put(sand3.getCoordinates(), sand3);
         entities.put(sand4.getCoordinates(), sand4);
         entities.put(sand5.getCoordinates(), sand5);
@@ -158,27 +144,25 @@ public class Field {
         entities.put(sand23.getCoordinates(), sand23);
         entities.put(sand24.getCoordinates(), sand24);
         entities.put(sand25.getCoordinates(), sand25);
-
     }
 
     public Entity getValue (Coordinates coordinates) {
         return entities.get(coordinates);
     }
 
-    public void removeFromMap (Coordinates coordinates) {
+    public void remove (Coordinates coordinates) {
         entities.remove(coordinates, entities.get(coordinates));
     }
 
-    public void mapPut(Coordinates coordinates, Entity entity) {
+    public void put (Coordinates coordinates, Entity entity) {
         entities.put(coordinates, entity);
     }
 
-    public void setAllEarth () {
+    public void addWater() {
         Column[] types = Column.values();
         for (int i = 1; i < 11; i++) {
             for (int j = 0; j < 13; j++) {
                 Water water = new Water(new Coordinates(i,types[j]));
-                //если данная клетка не занята -> установить землю
                 if (!entities.containsKey(new Coordinates(i,types[j]))) {
                     entities.put(new Coordinates(i, types[j]), water);
                 }

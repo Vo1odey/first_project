@@ -10,7 +10,6 @@ abstract public class Entity {
         this.coordinates = coordinates;
     }
     public Entity(){
-
     }
 
     public void setCoordinates(Coordinates coordinates) {

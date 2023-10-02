@@ -55,7 +55,7 @@ public class Simulation {
     }
 
     static void nextTurn(Field map){
-        map.setAllEarth();
+        map.addWater();
         MapConsoleRenderer.mapRendering(map);
     }
 
